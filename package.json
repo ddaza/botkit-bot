@@ -1,0 +1,29 @@
+{
+  "name": "botkit-bot",
+  "version": "1.0.0",
+  "description": "botkit example",
+  "scripts": {
+    "build-server": "./node_modules/.bin/gulp build-server -p",
+    "run-server": "./node_modules/.bin/gulp run-server -p"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.3.14",
+    "gulp": "^3.9.1",
+    "gulp-bg": "0.0.8",
+    "gulp-util": "^3.0.7"
+  },
+  "devDependencies": {
+    "path": "^0.12.7",
+    "babel-core": "^6.18.0",
+    "babel-loader": "^6.2.3",
+    "babel-plugin-syntax-async-functions": "^6.3.13",
+    "babel-plugin-transform-async-to-generator": "^6.4.6",
+    "babel-plugin-transform-regenerator": "^6.4.4",
+    "babel-plugin-transform-runtime": "^6.4.3",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "babel-runtime": "^6.18.0",
+    "json-loader": "^0.5.4",
+    "webpack": "^1.12.13"
+  }
+}
