@@ -5,14 +5,11 @@ const _ = require('lodash');
 
 module.exports = function (enviroment) {
   const entry = {
-    entry: {
-      vendor: ['babel-polyfill'],
-      server: './src/index.js'
-    },
+    entry: './index.js',
     target: 'node',
     output: {
       path: path.join(__dirname, './build'),
-      filename: '[name].js',
+      filename: 'server.js',
     },
   };
 
@@ -37,10 +34,6 @@ module.exports = function (enviroment) {
 
 function plugins(enviroment) {
   let plugins = [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: Infinity
-    })
   ];
 
   if (enviroment === 'PROD') {

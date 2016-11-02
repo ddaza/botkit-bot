@@ -17,3 +17,4 @@ class Test {
 
 const test = new Test();
 test.draw('this is a test');
+
