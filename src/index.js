@@ -1,5 +1,19 @@
 'use strict';
-(function(e = 'this is lowercase') {
-  console.log(e.toUpperCase());
-})();
+class Test {
 
+  promiseAscii(text) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(text);
+      }, 2000);
+    });
+  }
+
+  async draw(myText) {
+    const textArt =  await this.promiseAscii(myText);
+    console.log(textArt);
+  }
+}
+
+const test = new Test();
+test.draw('this is a test');

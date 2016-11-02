@@ -4,7 +4,8 @@
   "description": "botkit example",
   "scripts": {
     "build-server": "./node_modules/.bin/gulp build-server -p",
-    "run-server": "./node_modules/.bin/gulp run-server -p"
+    "run-server": "./node_modules/.bin/gulp run-server -p",
+    "start": "./node_modules/.bin/gulp default -p"
   },
   "dependencies": {
     "babel-core": "^6.18.0",
@@ -12,6 +13,7 @@
     "gulp": "^3.9.1",
     "gulp-bg": "0.0.8",
     "gulp-util": "^3.0.7",
+    "lodash": "^4.16.6",
     "path": "^0.12.7",
     "webpack": "^1.12.13"
   },

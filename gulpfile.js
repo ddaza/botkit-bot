@@ -6,16 +6,18 @@ const gutil = require('gulp-util');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config');
 
+const enviroment = String(process.env.NODE_ENV || 'DEV').toUpperCase();
+
 gulp.task('build-server', function (done) {
-  webpack(webpackConfig, function (err, stats) {
+  webpack(webpackConfig(enviroment), function (err, stats) {
     if (err) {
-      gutil.log('Error', err);
-    } else {
-      Object.keys(stats.compilation.assets).forEach(function(key) {
-        gutil.log('Webpack: output ', gutil.colors.green(key));
-      });
-      gutil.log('Webpack: ', gutil.colors.blue('finished ', stats.compilation.name));
+      throw new gutil.PluginError('[webpack:ERROR]', err);
     }
+
+    gutil.log('[webpack:build] ', stats.toString({
+      colors: true,
+      chunks: false
+    }));
 
     if (done) {
       done();
@@ -24,3 +26,5 @@ gulp.task('build-server', function (done) {
 });
 
 gulp.task('run-server', bg('node', './build/server.js'));
+
+gulp.task('default', ['build-server'], bg('node', './build/server.js'));
