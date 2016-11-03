@@ -1,20 +1,13 @@
 'use strict';
-class Test {
+import express from 'express';
+const app = express();
 
-  promiseAscii(text) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(text);
-      }, 2000);
-    });
-  }
+app.get('/', function (req, res) {
+  res.send('Hello World!');
+});
 
-  async draw(myText) {
-    const textArt =  await this.promiseAscii(myText);
-    console.log(textArt);
-  }
-}
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!');
+});
 
-const test = new Test();
-test.draw('this is a test');
 

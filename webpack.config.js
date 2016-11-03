@@ -34,6 +34,9 @@ module.exports = function (enviroment) {
 
 function plugins(enviroment) {
   let plugins = [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(enviroment)
+    })
   ];
 
   if (enviroment === 'PROD') {
