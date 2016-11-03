@@ -3,9 +3,9 @@ version: "2"
 services:
   web:
     build: .
-    command: sleep 9999
+    command: sleep 9999 # remove when deploying to prod
     volumes:
-      - "./:/app"
+      - "./:/app/"
     ports:
       - "3000:3000"
 
