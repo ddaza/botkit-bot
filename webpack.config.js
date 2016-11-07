@@ -3,7 +3,9 @@ const webpack = require('webpack');
 const path = require('path');
 const _ = require('lodash');
 
-module.exports = function (enviroment) {
+module.exports = buildWebpack;
+
+function buildWebpack(enviroment) {
   const entry = {
     entry: './index.js',
     target: 'node',
@@ -30,13 +32,24 @@ module.exports = function (enviroment) {
   };
 
   return _.extend(entry, plugins(enviroment), loaders);
-};
+}
 
 function plugins(enviroment) {
   let plugins = [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(enviroment)
-    })
+    }),
+    // PREFETCH MODULES
+    new webpack.PrefetchPlugin(path.join(__dirname, './index.js')),
+    new webpack.PrefetchPlugin(path.join(__dirname, './node_modules/botkit/lib/Botkit.js')),
+    new webpack.PrefetchPlugin(path.join(__dirname, './node_modules/twilio/lib/index.js')),
+    new webpack.PrefetchPlugin(path.join(__dirname, './node_modules/twilio/lib/RestClient.js')),
+    new webpack.PrefetchPlugin(path.join(__dirname, './node_modules/twilio/lib/Client.js')),
+    new webpack.PrefetchPlugin(path.join(__dirname, './node_modules/twilio/node_modules/request/index.js')),
+    new webpack.PrefetchPlugin(path.join(__dirname, './node_modules/twilio/node_modules/bl/bl.js')),
+    new webpack.PrefetchPlugin(path.join(__dirname, './node_modules/twilio/node_modules/readable-stream/duplex.js')),
+    // OPTIMIZE DEDUPLE
+    new webpack.optimize.DedupePlugin()
   ];
 
   if (enviroment === 'PROD') {
@@ -50,6 +63,7 @@ function plugins(enviroment) {
       })
     );
   } else {
+    // CONSIDER REMOVING SOUCE MAPS DUE TO PERFORMANCE
     plugins.push(new webpack.SourceMapDevToolPlugin(
       '[file].map', null,
       '[absolute-resource-path]', '[absolute-resource-path]')

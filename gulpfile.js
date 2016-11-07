@@ -9,6 +9,8 @@ const webpackConfig = require('./webpack.config');
 const enviroment = String(process.env.NODE_ENV || 'DEV').toUpperCase();
 
 gulp.task('build-server', function (done) {
+  gutil.log(gutil.colors.magenta('Enviroment:'), enviroment);
+
   webpack(webpackConfig(enviroment), function (err, stats) {
     if (err) {
       throw new gutil.PluginError('[webpack:ERROR]', err);

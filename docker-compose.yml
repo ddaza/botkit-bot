@@ -6,7 +6,7 @@ services:
     command: sleep 9999 # remove when deploying to prod
     environment:
       - NODE_ENV=${NODE_ENV}
-      - SLACK_ID=${SLACK_ID}
+      - TOKEN_ID=${TOKEN_ID}
       - TERM=xterm
     volumes:
       - "./:/app/"

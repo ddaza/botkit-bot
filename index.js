@@ -1,13 +1,13 @@
 'use strict';
-import express from 'express';
-const app = express();
+import Bot from './src/botkit';
 
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-});
+const tokenId = process.env.TOKEN_ID;
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
-});
+if (tokenId) {
+  const myBot = new Bot(tokenId);
+  myBot.connect();
 
 
+} else {
+  throw new Error('Token Id is not defined in the env vars!');
+}
