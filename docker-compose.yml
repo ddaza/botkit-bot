@@ -6,7 +6,12 @@ services:
     command: sleep 9999 # remove when deploying to prod
     environment:
       - NODE_ENV=${NODE_ENV}
-      - TOKEN_ID=${TOKEN_ID}
+      - SLACK_TOKEN_ID=${SLACK_TOKEN_ID}
+      - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
+      - TWILIO_API_KEY=${TWILIO_API_KEY}
+      - TWILIO_API_SECRET=${TWILIO_API_SECRET}
+      - FROM_NUMBER=${FROM_NUMBER}
+      - TO_NUMBER=${TO_NUMBER}
       - TERM=xterm
     volumes:
       - "./:/app/"

@@ -1,11 +1,13 @@
 'use strict';
 import botkit from 'botkit';
 import colors from 'colors/safe';
+import sayHi from './conversations/hi.js';
+import _ from 'lodash';
 
 export default class Bot {
   constructor(token) {
     this.token = token; // secret token id
-    this.controller = botkit.slackbot(); // botkit controller
+    this.controller = botkit.slackbot({stats_optout: true}); // botkit controller
     this.bot = null; // instance of my bot
     this.payload = null; // info about the slack team I just connected to
   }
@@ -17,6 +19,7 @@ export default class Bot {
       });
 
       this.payload = await this.startRTM();
+
       console.log(colors.green('Bot connected:'), this.payload.ok); // eslint-disable-line no-console
       console.log(colors.green('Bot Name:'), this.payload.self.name); // eslint-disable-line no-console
     } catch(err) {
@@ -28,9 +31,25 @@ export default class Bot {
     return new Promise((resolve, reject) => {
       this.bot.startRTM(function(err, bot, payload) {
         if (err) {
-          return reject(err);
+          reject(err);
+          return;
         }
         resolve(payload);
+      });
+    });
+  }
+
+  setConvo(hears, cb) {
+    return new Promise((resolve, reject) => {
+      this.controller.hears(hears, ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
+        bot.startConversation(message, (err, convo) => {
+          if (err) {
+            reject(err);
+            return;
+          }
+          cb(message, convo, bot);
+          resolve();
+        });
       });
     });
   }
@@ -45,24 +64,11 @@ export default class Bot {
     }
   }
 
-  wakeUp() {
-    // reply to any incoming message
-    this.controller.on('message_received', function(bot, message) {
-      if (message) {
-        bot.reply(message, 'I heard... something!');
-      }
-    });
-
-    // reply to a direct mention - @bot hello
-    this.controller.on('direct_mention',function(bot,message) {
-      // reply to _message_ by using the _bot_ object
-      bot.reply(message,'I heard you mention me!');
-    });
-
-    // reply to a direct message
-    this.controller.on('direct_message',function(bot,message) {
-      // reply to _message_ by using the _bot_ object
-      bot.reply(message,'You are talking directly to me');
-    });
+  async wakeUp() {
+    try {
+      await this.setConvo(['hi', 'hello', 'hey'], sayHi);
+    } catch (err) {
+      throw new Error(err);
+    }
   }
 }
