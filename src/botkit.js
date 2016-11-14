@@ -21,7 +21,7 @@ export default class Bot {
         token: this.token
       });
 
-      this.payload = await this.startRTM();
+      this.payload = await this._startRTM();
 
       console.log(colors.green('Bot connected:'), this.payload.ok); // eslint-disable-line no-console
       console.log(colors.green('Bot Name:'), this.payload.self.name); // eslint-disable-line no-console
@@ -30,7 +30,7 @@ export default class Bot {
     }
   }
 
-  startRTM() {
+  _startRTM() {
     return new Promise((resolve, reject) => {
       this.bot.startRTM(function(err, bot, payload) {
         if (err) {
