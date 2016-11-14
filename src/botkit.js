@@ -1,8 +1,8 @@
 'use strict';
 import botkit from 'botkit';
 import colors from 'colors/safe';
-import sayHi from './conversations/hi.js';
-import _ from 'lodash';
+import sayHi from './conversations/hi';
+import txtMe from './conversations/text';
 
 export default class Bot {
   constructor(token) {
@@ -67,6 +67,7 @@ export default class Bot {
   async wakeUp() {
     try {
       await this.setConvo(['hi', 'hello', 'hey'], sayHi);
+      await this.setConvo(['txt', 'sms'], txtMe);
     } catch (err) {
       throw new Error(err);
     }
