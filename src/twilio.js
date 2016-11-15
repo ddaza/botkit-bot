@@ -11,7 +11,14 @@ const fromNum = process.env.FROM_NUMBER;
 export default class Twilio {
   constructor() {
     // set the tokens
+    if (!accountSid || !apiSecret || !apiSecret) {
+      this.twilioDefined = false;
+      this.account = null;
+      return;
+    }
+
     this.account = client(apiKey, apiSecret).accounts(accountSid);
+    this.twilioDefined = true;
   }
 
   txtMessage(body, to=toNum, from=fromNum) {
@@ -25,7 +32,8 @@ export default class Twilio {
       });
     });
   }
+
+  isDefined() {
+    return this.twilioDefined;
+  }
 }
-
-
-

@@ -28,8 +28,12 @@ export default function (message, convo, bot) {
 
   convo.on('end', function(convo) {
     if (convo.status == 'completed') {
-      const message = convo.extractResponse('message');
-      twilio.txtMessage(message);
+      if (twilio.isDefined()) {
+        const message = convo.extractResponse('message');
+        twilio.txtMessage(message);
+      } else {
+        bot.reply(message, 'Sorry, twilio keys are not defined!');
+      }
     } else {
       bot.reply(message, 'OK, nevermind!');
     }
