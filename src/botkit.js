@@ -26,7 +26,7 @@ export default class Bot {
       console.log(colors.green('Bot connected:'), this.payload.ok); // eslint-disable-line no-console
       console.log(colors.green('Bot Name:'), this.payload.self.name); // eslint-disable-line no-console
     } catch(err) {
-      throw new Error(err);
+      console.error(new Error(err)); // eslint-disable-line no-console
     }
   }
 
@@ -34,9 +34,10 @@ export default class Bot {
     return new Promise((resolve, reject) => {
       this.bot.startRTM(function(err, bot, payload) {
         if (err) {
-          reject(err);
-          return;
+          console.error(colors.red('Error connecting to Slack')); // eslint-disable-line no-console
+          return reject(err);
         }
+
         resolve(payload);
       });
     });
